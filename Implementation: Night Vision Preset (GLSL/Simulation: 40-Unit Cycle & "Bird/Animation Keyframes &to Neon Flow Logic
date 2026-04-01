@@ -1,0 +1,31 @@
+/* Power Channel Animation */
+@keyframes neon-pulse {
+  0% {
+    box-shadow: 0 0 5px var(--neon-power-cyan), 0 0 10px var(--neon-power-cyan);
+    opacity: 0.7;
+  }
+  50% {
+    box-shadow: 0 0 20px var(--neon-power-cyan), 0 0 30px var(--neon-power-cyan);
+    opacity: 1;
+  }
+  100% {
+    box-shadow: 0 0 5px var(--neon-power-cyan), 0 0 10px var(--neon-power-cyan);
+    opacity: 0.7;
+  }
+}
+
+/* Directional Data Flow */
+@keyframes flow-vector {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.active-channel {
+  animation: neon-pulse 2s infinite ease-in-out;
+  stroke-dasharray: 10;
+  animation: flow-vector 5s linear infinite;
+}
