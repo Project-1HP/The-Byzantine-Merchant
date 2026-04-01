@@ -1,0 +1,22 @@
+/* Scanline Overlay: Card Conduit &to March 31, 2026 */
+
+#version 300 es
+precision highp float;
+
+uniform sampler2D u_sceneTexture;
+in vec2 v_texCoord;
+out vec4 outColor;
+
+void main() {
+  vec4 baseColor = texture(u_sceneTexture, v_texCoord);
+
+  // 1. Calculate Scanline Intensity &to Y-Coordinate
+  // Logic: sin(y * density) &to rhythmic darkening
+  float scanline = sin(v_texCoord.y * 800.0) * 0.04;
+
+  // 2. Apply Subtle Flickering &to Neon Power Channel
+  float flicker = sin(u_time * 10.0) * 0.01;
+
+  // 3. Final Composite &to Matte-Black Depth
+  outColor = vec4(baseColor.rgb - scanline - flicker, 1.0);
+}
