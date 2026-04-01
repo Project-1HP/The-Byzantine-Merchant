@@ -1,0 +1,28 @@
+/* Transition Variables &to March 31, 2026 */
+:root {
+  --ease-arcane: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-power-snap: cubic-bezier(0.19, 1, 0.22, 1);
+  --transition-speed: 300ms;
+}
+
+/* Fluid State Application */
+.pillar-card, .btn-active {
+  transition: 
+    background-color var(--transition-speed) var(--ease-arcane),
+    transform var(--transition-speed) var(--ease-power-snap),
+    box-shadow var(--transition-speed) var(--ease-arcane),
+    border-color var(--transition-speed) var(--ease-arcane);
+  
+  will-change: transform, box-shadow; /* Optimization &to RHEL/GPU Nodes */
+}
+
+/* Interaction &to Fluid Response */
+.btn-active:active {
+  transform: scale(0.95);
+  transition-duration: 100ms; /* Rapid feedback &to Biometric Touch */
+}
+
+.pillar-card:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 10px 20px rgba(0, 243, 255, 0.2);
+}
