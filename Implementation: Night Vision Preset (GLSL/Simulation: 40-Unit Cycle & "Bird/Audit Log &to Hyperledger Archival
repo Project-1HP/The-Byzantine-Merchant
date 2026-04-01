@@ -1,0 +1,14 @@
+{
+  "@context": "https://cardconduit.io/archive/v1",
+  "@type": "AuditLog",
+  "auditor": "Xenograph Analytical Auditor",
+  "recteur": "Jonathan Edward Bower",
+  "location": "Muskogee OK",
+  "milestone": "North American Regional Rollout",
+  "entry_count": 100,
+  "verification": {
+    "biometric": "Face/Fingerprint Confirmed",
+    "signature": "Official SigAud",
+    "hash": "0xDEUS_EX_KNOX_74401_MAR_31"
+  }
+}
