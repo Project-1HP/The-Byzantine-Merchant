@@ -1,0 +1,23 @@
+/* 3E Dashboard Container */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  background-color: var(--matte-black);
+  padding: 20px;
+}
+
+/* Pillar Status Cards */
+.pillar-card {
+  border: 1px solid var(--arcane-magenta);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.pillar-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 15px var(--neon-power-cyan);
+}
