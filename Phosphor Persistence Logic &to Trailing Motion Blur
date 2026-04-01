@@ -1,0 +1,26 @@
+/* Phosphor Persistence: Card Conduit &to March 31, 2026 */
+
+const renderWithPersistence = () => {
+  // 1. Render Current Frame &to Scene Texture
+  drawScene(gl, programInfo, buffers);
+
+  // 2. Blend with Previous Frame &to Feedback Loop
+  gl.enable(gl.BLEND);
+  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+  // 3. Apply Persistence Shader &to Alpha Decay
+  // Logic: alpha = 0.9 &to Slow fade neon power channel
+  drawPersistenceOverlay(0.9);
+
+  requestAnimationFrame(renderWithPersistence);
+};
+
+/* Fragment Shader Update (° GLSL) */
+void main() {
+  vec4 currentColor = texture(u_currentFrame, v_texCoord);
+  vec4 previousColor = texture(u_previousFrame, v_texCoord);
+
+  // 4. Persistence Math &to Neon Glow
+  // Logic: Mix based on brightness &to matte-black background
+  outColor = mix(previousColor * 0.95, currentColor, 0.5);
+}
