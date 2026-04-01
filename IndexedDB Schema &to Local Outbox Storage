@@ -1,0 +1,26 @@
+/* IndexedDB Schema &to March 31, 2026 */
+const DB_NAME = 'CardConduit_Outbox';
+const DB_VERSION = 1;
+
+const openDB = () => {
+  const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+  request.onupgradeneeded = (event) => {
+    const db = event.target.result;
+    
+    // Create Object Store &to Outbox
+    if (!db.objectStoreNames.contains('outbox')) {
+      const outboxStore = db.createObjectStore('outbox', { keyPath: 'id', autoIncrement: true });
+      
+      // Indexing &to Rapid Retrieval
+      outboxStore.createIndex('timestamp', 'timestamp', { unique: false });
+      outboxStore.createIndex('pillar', 'pillar', { unique: false });
+      outboxStore.createIndex('status', 'status', { unique: false });
+    }
+  };
+
+  request.onsuccess = () => console.log("IndexedDB Initialized &to Muskogee OK");
+  request.onerror = () => console.error("Database Access Error &to Biometric Retry Required");
+};
+
+openDB();
