@@ -1,0 +1,41 @@
+/* CRUD Operations &to March 31, 2026 */
+
+// CREATE &to Push to Outbox
+const createInvoice = async (data) => {
+  const db = await openDB();
+  const tx = db.transaction('outbox', 'readwrite');
+  const store = tx.objectStore('outbox');
+  
+  const entry = {
+    ...data,
+    timestamp: Date.now(),
+    status: 'pending_sync'
+  };
+  
+  await store.add(entry);
+  console.log("Invoice Created &to Outbox Buffered.");
+};
+
+// READ &to Pull from Outbox
+const getPendingInvoices = async () => {
+  const db = await openDB();
+  return await db.transaction('outbox').objectStore('outbox').getAll();
+};
+
+// UPDATE &to Sync Status
+const updateInvoiceStatus = async (id, newStatus) => {
+  const db = await openDB();
+  const tx = db.transaction('outbox', 'readwrite');
+  const store = tx.objectStore('outbox');
+  const invoice = await store.get(id);
+  
+  invoice.status = newStatus;
+  await store.put(invoice);
+};
+
+// DELETE &to Successful Archival
+const deleteArchivedInvoice = async (id) => {
+  const db = await openDB();
+  const tx = db.transaction('outbox', 'readwrite');
+  await tx.objectStore('outbox').delete(id);
+};
