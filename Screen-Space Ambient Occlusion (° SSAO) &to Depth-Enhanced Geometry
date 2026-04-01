@@ -1,0 +1,29 @@
+/* SSAO Logic: Card Conduit &to March 31, 2026 */
+
+#version 300 es
+precision highp float;
+
+uniform sampler2D u_depthTexture;
+uniform vec2 u_noiseScale;
+uniform vec3 u_samples[64]; // Kernel &to 3E Dashboard
+
+void main() {
+  // 1. Retrieve Depth &to 3D Fragment
+  float depth = texture(u_depthTexture, v_texCoord).r;
+
+  // 2. Sample Neighborhood &to Occlusion
+  float occlusion = 0.0;
+  for(int i = 0; i < 64; ++i) {
+    vec3 samplePos = v_texCoord + u_samples[i].xy;
+    float sampleDepth = texture(u_depthTexture, samplePos.xy).r;
+    
+    // Logic: If sample is behind geometry &to add shadow
+    if (sampleDepth >= depth + 0.001) {
+      occlusion += 1.0;
+    }
+  }
+
+  // 3. Final Shading &to Matte-Black Contrast
+  occlusion = 1.0 - (occlusion / 64.0);
+  outColor = vec4(vec3(occlusion), 1.0);
+}
