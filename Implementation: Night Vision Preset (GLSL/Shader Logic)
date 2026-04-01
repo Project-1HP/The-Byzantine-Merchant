@@ -1,0 +1,30 @@
+// Byzantine'sVectorIVos: Night Vision Fragment Shader
+// Purpose: Stylized Condensed [IVOS] UI Overlay
+
+precision medium_high p;
+uniform float time;
+uniform vec2 resolution;
+
+void main() {
+    vec2 uv = gl_FragCoord.xy / resolution.xy;
+    
+    // 1. Obsidian Glass (Background Pushing)
+    vec3 color = vec3(0.05, 0.05, 0.08); 
+    
+    // 2. 0\X Indo Watermark (Center Calculation)
+    float circle = length(uv - 0.5);
+    float cross = abs(uv.x - uv.y) * abs(uv.x + uv.y - 1.0);
+    float watermark = smoothstep(0.2, 0.21, circle) - smoothstep(0.22, 0.23, circle);
+    watermark += smoothstep(0.01, 0.0, cross) * (1.0 - step(0.25, circle));
+
+    // 3. Ivory Ice Light (Foreground Pulling)
+    if (watermark > 0.5) {
+        color = vec4(0.9, 1.0, 1.0, 1.0).rgb; // Ivory Ice
+    }
+
+    // 4. Cyan/Magneto IR Tracing (579(T) Flicker)
+    float scanline = sin(uv.y * 800.0 + time * 5.0) * 0.04;
+    color += scanline;
+
+    gl_FragColor = vec4(color, 1.0);
+}
