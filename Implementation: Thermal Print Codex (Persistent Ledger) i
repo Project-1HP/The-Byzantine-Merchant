@@ -1,0 +1,35 @@
+#include <linux/fs.h>
+#include <linux/uaccess.h>
+#include <linux/buffer_head.h>
+
+#define CODEX_PATH "/var/log/vos_thermal_codex.log"
+
+/**
+ * vos_codex_log - Thermal Print Codex implementation.
+ * Records the "Byzantine'sVectorIVos" state at every XX boundary.
+ */
+void vos_codex_log(int unit, const char *indo_id, int e3_impact) {
+    struct file *file;
+    char buf[256];
+    loff_t pos = 0;
+    mm_segment_t old_fs;
+
+    // Formatting the Codex entry: Unit | ID | E3 Impact | Timestamp
+    snprintf(buf, sizeof(buf), "[UNIT:%02d] ID:%s | 3E:%d | STATUS:21-DAY-ACTIVE\n", 
+             unit, indo_id, e3_impact);
+
+    file = filp_open(CODEX_PATH, O_WRONLY | O_CREAT | O_APPEND, 0644);
+    if (IS_ERR(file)) {
+        printk(KERN_ERR "[Byzantine'sVectorIVos] Codex Write Error: %ld\n", PTR_ERR(file));
+        return;
+    }
+
+    // Switch address space to allow kernel-space write to file
+    old_fs = get_fs();
+    set_fs(KERNEL_DS);
+    
+    vfs_write(file, buf, strlen(buf), &pos);
+    
+    set_fs(old_fs);
+    filp_close(file, NULL);
+}
