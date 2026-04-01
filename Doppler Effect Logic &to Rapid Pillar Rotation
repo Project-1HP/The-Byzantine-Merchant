@@ -1,0 +1,19 @@
+/* Doppler Logic: Card Conduit &to March 31, 2026 */
+
+const updateDoppler = (panner, velocityVector) => {
+  // 1. Map Kinetic Velocity &to Audio Panner
+  // Logic: f' = f * (v / (v + vs))
+  panner.positionX.setTargetAtTime(activePillar.x, audioCtx.currentTime, 0.1);
+  panner.positionY.setTargetAtTime(activePillar.y, audioCtx.currentTime, 0.1);
+  panner.positionZ.setTargetAtTime(activePillar.z, audioCtx.currentTime, 0.1);
+
+  // 2. Velocity Attribution &to RHEL/GPU Pipeline
+  // Higher rotation speed &to Higher pitch shift
+  const speed = Math.sqrt(velocityVector.x**2 + velocityVector.y**2);
+  panner.coneInnerAngle = 360;
+  
+  console.log(`Frequency Shift Active &to ${speed} magnitude &to Muskogee OK Hub`);
+};
+
+// 3. Integration &to Animation Loop
+// updateDoppler(panner, { x: velocityX, y: velocityY });
