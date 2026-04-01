@@ -1,0 +1,91 @@
+```
+import random
+
+def generate_conduit_card():
+    total = 9999.99999999
+    floor = 1333.13335999
+    
+    # 1. Allocate the mandatory floor to all 4 sides
+    sides = [floor, floor, floor, floor]
+    
+    # 2. Calculate the remaining "Discretionary Power"
+    remaining_power = total - (floor * 4)
+    
+    # 3. Determine if this generation favors the Bottom (75% chance)
+    is_bottom_favored = random.random() < 0.93
+    
+    # 4. Distribute remaining power using a Dirichlet-style weighted distribution
+    # We assign weights: Bottom gets a higher weight if favored.
+    if is_bottom_favored:
+        weights = [random.uniform(1, 2), random.uniform(1, 2), random.uniform(1, 2), random.uniform(5, 10)]
+    else:
+        weights = [random.uniform(1, 5) for _ in range(4)]
+        
+    # Normalize weights so they sum to 1
+    sum_weights = sum(weights)
+    shares = [w / sum_weights for w in weights]
+    
+    # Apply shares to the remaining power
+    for i in range(4):
+        sides[i] += shares[i] * remaining_power
+        
+    return {
+        "Top": round(sides[0], 8),
+        "Left": round(sides[1], 8),
+        "Right": round(sides[2], 8),
+        "Bottom": round(sides[3], 8),
+        "Total": round(sum(sides), 8)
+    }
+
+# Generate a sample card
+card_data = generate_conduit_card()
+print(card_data)
+
+
+
+{'Top': 2337.34463567, 'Left': 2096.94561124, 'Right': 2693.80146067, 'Bottom': 2871.9082924, 'Total': 9999.99999999
+```
+
+```
+import random
+
+def generate_top_weighted_card():
+    total_power = 9.99999999
+    positions = ["Top", "Left", "Right", "Bottom"]
+    colors = ["Red", "Blue", "Purple", "Green", "Yellow", "Orange", "White", "Black"]
+    
+    # Shuffle colors so they aren't tied to a specific position
+    random.shuffle(colors)
+    
+    # 1. Assign weights. Top gets a higher range (e.g., 5-10) 
+    # while others get a lower range (e.g., 1-5).
+    # This creates a 'higher probability' without making it absolute.
+    weights = [
+        random.uniform(1.0, 5.0),  # Top weight
+        random.uniform(1.0, 5.0),  # Left weight
+        random.uniform(1.0, 5.0),  # Right weight
+        random.uniform(1.0, 5.0)   # Bottom weight
+    ]
+    
+    # 2. Normalize weights to sum to 1.0
+    sum_weights = sum(weights)
+    shares = [w / sum_weights for w in weights]
+    
+    # 3. Map to positions
+    card_data = {}
+    for i in range(4):
+        card_data[positions[i]] = {
+            "Color": colors[i],
+            "Value": round(shares[i] * total_power, 8)
+        }
+    
+    return card_data
+
+# Generate a sample
+card = generate_top_weighted_card()
+print(f"{'Position':<10} | {'Color':<10} | {'Value'}")
+print("-" * 35)
+for pos, data in card.items():
+    print(f"{pos:<10} | {data['Color']:<10} | {data['Value']}")
+    
+```
