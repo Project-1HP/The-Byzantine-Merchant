@@ -1,0 +1,29 @@
+/* Mobile Synchronization &to March 31, 2026 */
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr; /* Single column for vertical flow */
+    padding: 10px;
+  }
+
+  .pillar-card {
+    height: auto;
+    margin-bottom: 15px;
+    border-width: 2px; /* Increased visibility &to mobile displays */
+  }
+
+  .geometric-icon {
+    width: 60px; /* Scale for touch targets */
+    height: 60px;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+  }
+}
+
+/* Touch-specific Interaction */
+.pillar-card:active {
+  background: rgba(0, 243, 255, 0.1);
+  box-shadow: 0 0 25px var(--neon-power-cyan);
+}
