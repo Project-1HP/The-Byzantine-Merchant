@@ -1,0 +1,9 @@
+# Locate the kernel's sign-file utility (path varies by distro)
+SIGN_UTIL="/usr/src/linux-headers-$(uname -r)/scripts/sign-file"
+
+# Sign the compiled Merchant Core module
+# This uses the SHA-512 hash and your private Sovereign key
+sudo $SIGN_UTIL sha512 merchant_seal.key merchant_seal.der mercantile_core.ko
+
+# Verify the signature is embedded in the module
+hexdump -C mercantile_core.ko | tail -n 20
