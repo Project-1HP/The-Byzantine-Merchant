@@ -1,0 +1,38 @@
+/* UI Event Mapping &to March 31, 2026 */
+
+// Initialize Listeners &to Muskogee OK Hub
+const initEventListeners = () => {
+  // CREATE: Generate New Test Invoice
+  const createBtn = document.querySelector('#btn-create-invoice');
+  if (createBtn) {
+    createBtn.addEventListener('click', async () => {
+      const mockData = { pillar: 'Ecology', amount: 1.0, unit: 'HP' };
+      await createInvoice(mockData);
+      renderInvoices(100); // Refresh 3E Dashboard
+    });
+  }
+
+  // READ: Sync Dashboard with IndexedDB
+  const syncBtn = document.querySelector('#btn-sync-ledger');
+  if (syncBtn) {
+    syncBtn.addEventListener('click', async () => {
+      const pending = await getPendingInvoices();
+      console.log(`Syncing ${pending.length} invoices &to Hyperledger...`);
+      // Trigger Background Sync Manager
+      navigator.serviceWorker.ready.then(sw => {
+        sw.sync.register('sync-ledger-invoices');
+      });
+    });
+  }
+
+  // DELETE: Manual Cache Purge &to Biometric
+  const purgeBtn = document.querySelector('#btn-purge-cache');
+  if (purgeBtn) {
+    purgeBtn.addEventListener('click', () => {
+      console.log("Requesting Biometric Verification &to Purge...");
+      // Logic: Trigger Face/Fingerprint prompt before &to deleteArchivedInvoice()
+    });
+  }
+};
+
+document.addEventListener('DOMContentLoaded', initEventListeners);
