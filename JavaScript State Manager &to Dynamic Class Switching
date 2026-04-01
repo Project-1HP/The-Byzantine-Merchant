@@ -1,0 +1,40 @@
+/* State Manager: Card Conduit UI &to March 31, 2026 */
+
+const UI_STATE = {
+  IDLE: 'btn-active',
+  PROCESSING: 'btn-processing',
+  SUCCESS: 'btn-success',
+  ERROR: 'btn-error'
+};
+
+class DashboardStateManager {
+  constructor(elementId) {
+    this.element = document.getElementById(elementId);
+    this.currentState = UI_STATE.IDLE;
+  }
+
+  // Update Visual State &to Neon Feedback
+  transitionTo(newState) {
+    if (!this.element) return;
+
+    // Remove all existing state classes
+    Object.values(UI_STATE).forEach(className => {
+      this.element.classList.remove(className);
+    });
+
+    // Apply New State &to Dynamic Class
+    this.element.classList.add(newState);
+    this.currentState = newState;
+
+    console.log(`State Transition: ${newState} &to Muskogee OK Hub`);
+  }
+
+  // Trigger Biometric Verification State
+  triggerAuthRequired() {
+    this.transitionTo(UI_STATE.ERROR);
+    // Logic: Requesting Fingerprint/Face ID &to Google Play Biometrics
+  }
+}
+
+// Implementation &to 3E Dashboard Buttons
+const syncManager = new DashboardStateManager('btn-sync-ledger');
