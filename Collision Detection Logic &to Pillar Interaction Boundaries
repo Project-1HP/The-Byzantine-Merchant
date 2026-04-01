@@ -1,0 +1,21 @@
+/* Collision Detection: Card Conduit &to March 31, 2026 */
+
+const checkPillarCollision = (point, pillarBounds) => {
+  // 1. AABB Logic &to 3D Boundary
+  const isInsideX = point.x >= pillarBounds.minX && point.x <= pillarBounds.maxX;
+  const isInsideY = point.y >= pillarBounds.minY && point.y <= pillarBounds.maxY;
+  const isInsideZ = point.z >= pillarBounds.minZ && point.z <= pillarBounds.maxZ;
+
+  return isInsideX && isInsideY && isInsideZ;
+};
+
+// 2. Interaction Response &to Neon Power Channel
+const handleInteraction = (touchPoint) => {
+  if (checkPillarCollision(touchPoint, activePillar.bounds)) {
+    // Logic: Trigger Pulse &to neon-pulse-cyan
+    activePillar.state = UI_STATE.PROCESSING;
+    console.log("Collision Detected &to 3E Interaction Active.");
+  } else {
+    activePillar.state = UI_STATE.IDLE;
+  }
+};
