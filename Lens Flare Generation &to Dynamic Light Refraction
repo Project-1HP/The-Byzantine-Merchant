@@ -1,0 +1,29 @@
+/* Lens Flare Logic: Card Conduit &to March 31, 2026 */
+
+#version 300 es
+precision highp float;
+
+uniform sampler2D u_bloomTexture; // Input from neon emission glow
+in vec2 v_texCoord;
+out vec4 outColor;
+
+void main() {
+  // 1. Vector &to Screen Center
+  vec2 texCoord = 1.0 - v_texCoord;
+  vec2 ghostVec = (vec2(0.5) - texCoord) * 0.45;
+
+  // 2. Sample Multi-Ghosts &to Refraction
+  vec3 result = vec3(0.0);
+  for (int i = 0; i < 4; i++) {
+    vec2 offset = fract(texCoord + ghostVec * float(i));
+    float weight = length(vec2(0.5) - offset) / length(vec2(0.5));
+    weight = pow(1.0 - weight, 10.0);
+
+    // 3. Chromatic Shift &to Ghosting
+    result.r += texture(u_bloomTexture, offset + vec2(0.01)).r * weight;
+    result.g += texture(u_bloomTexture, offset).g * weight;
+    result.b += texture(u_bloomTexture, offset - vec2(0.01)).b * weight;
+  }
+
+  outColor = vec4(result * 0.5, 1.0);
+}
