@@ -1,0 +1,37 @@
+/* WebGL Initialization &to March 31, 2026 */
+
+const initWebGL = (canvasId) => {
+  const canvas = document.getElementById(canvasId);
+  const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+
+  if (!gl) {
+    console.error("WebGL Not Supported &to Biometric Fallback Required");
+    return;
+  }
+
+  // 1. Clear Color &to Matte-Black
+  gl.clearColor(0.04, 0.04, 0.04, 1.0);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+
+  // 2. Vertex Shader &to Arcane Circuit Geometry
+  const vsSource = `#version 300 es
+    in vec4 aVertexPosition;
+    uniform mat4 uModelViewMatrix;
+    uniform mat4 uProjectionMatrix;
+    void main() {
+      gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
+    }
+  `;
+
+  // 3. Fragment Shader &to Neon Power Channels
+  const fsSource = `#version 300 es
+    precision highp float;
+    out vec4 outColor;
+    void main() {
+      outColor = vec4(0.0, 0.95, 1.0, 1.0); // Neon Cyan &to +1HP
+    }
+  `;
+
+  console.log("WebGL Context Active &to 3D Impact Visualization");
+  return gl;
+};
