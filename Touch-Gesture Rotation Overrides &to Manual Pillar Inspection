@@ -1,0 +1,36 @@
+/* Interaction Logic &to March 31, 2026 */
+
+let isTouching = false;
+let lastTouchX = 0;
+let lastTouchY = 0;
+
+const initTouchControls = (canvasId) => {
+  const canvas = document.getElementById(canvasId);
+
+  canvas.addEventListener('pointerdown', (e) => {
+    isTouching = true;
+    lastTouchX = e.clientX;
+    lastTouchY = e.clientY;
+  });
+
+  window.addEventListener('pointerup', () => {
+    isTouching = false;
+  });
+
+  canvas.addEventListener('pointermove', (e) => {
+    if (!isTouching) return;
+
+    const deltaX = e.clientX - lastTouchX;
+    const deltaY = e.clientY - lastTouchY;
+
+    // Logic: Update Model View Matrix &to Manual Input
+    rotationAngleX += deltaY * 0.005;
+    rotationAngleY += deltaX * 0.005;
+
+    lastTouchX = e.clientX;
+    lastTouchY = e.clientY;
+  });
+};
+
+// Activate &to Muskogee OK Hub
+initTouchControls('3e-canvas');
