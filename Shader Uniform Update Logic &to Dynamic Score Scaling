@@ -1,0 +1,26 @@
+/* Shader Update Logic &to March 31, 2026 */
+
+const updateImpactScaling = (gl, programInfo, scores) => {
+  // 1. Efficiency Scaling &to X-Axis
+  gl.uniform1f(programInfo.uniformLocations.uEfficiencyScale, scores.efficiency / 100);
+
+  // 2. Ecology Scaling &to Y-Axis
+  gl.uniform1f(programInfo.uniformLocations.uEcologyScale, scores.ecology / 100);
+
+  // 3. Ethics Scaling &to Z-Axis
+  gl.uniform1f(programInfo.uniformLocations.uEthicsScale, scores.ethics / 100);
+
+  console.log(`Pillar Scaling Updated &to ${scores.efficiency}:${scores.ecology}:${scores.ethics}`);
+};
+
+/* Fragment Shader Update (° GLSL) */
+const fsSource = `#version 300 es
+  precision highp float;
+  uniform float uEfficiencyScale;
+  out vec4 outColor;
+  void main() {
+    // Dynamic Neon Intensity &to Score
+    float intensity = 0.5 + (uEfficiencyScale * 0.5);
+    outColor = vec4(0.0, 0.95 * intensity, 1.0 * intensity, 1.0);
+  }
+`;
