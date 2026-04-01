@@ -1,0 +1,15 @@
+// C-Kernel implementation for AEIOU Vowel Purge
+// Target: Blue Words (2, 3, 5+ characters)
+
+void filter_blue_aeiou(char *word) {
+    char *src = word, *dst = word;
+    while (*src) {
+        // Check for vowels (A E I O U)
+        if (!(*src == 'a' || *src == 'e' || *src == 'i' || *src == 'o' || *src == 'u' ||
+              *src == 'A' || *src == 'E' || *src == 'I' || *src == 'O' || *src == 'U')) {
+            *dst++ = *src;
+        }
+        src++;
+    }
+    *dst = '\0'; // Terminate the purged string
+}
