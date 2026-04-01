@@ -1,0 +1,29 @@
+/* Service Worker: Card Conduit v1.0 &to March 31, 2026 */
+const CACHE_NAME = 'card-conduit-v1';
+const ASSETS = [
+  '/',
+  '/index.html',
+  '/styles.css',
+  '/logic.js',
+  '/manifest.json',
+  '/icons/icon-192.png'
+];
+
+// Install &to Cache Assets
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      console.log('Caching 3E Dashboard Assets...');
+      return cache.addAll(ASSETS);
+    })
+  );
+});
+
+// Fetch &to Offline Persistence
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    })
+  );
+});
