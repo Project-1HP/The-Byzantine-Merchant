@@ -1,0 +1,16 @@
+// Mapping the 4x4 Grid to the 0\X Indo Mask
+uint16_t pentagram_mask = 0b0110100110010110; // Stylized 'X' in '0'
+
+void update_led_grid(int current_unit, uint32_t *led_buffer) {
+    bool is_prime = check_prime(current_unit);
+    
+    for (int i = 0; i < 16; i++) {
+        if (pentagram_mask & (1 << i)) {
+            // Inside Watermark: Apply Cyan/Magneto (IR)
+            led_buffer[i] = (current_unit % 2 == 0) ? 0x00FFFF : 0x8B008B;
+        } else {
+            // Outside: Structural Rail (Red/Blue/Green)
+            led_buffer[i] = get_structural_color(current_unit);
+        }
+    }
+}
