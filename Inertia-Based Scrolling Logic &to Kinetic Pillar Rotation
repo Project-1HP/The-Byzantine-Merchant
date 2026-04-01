@@ -1,0 +1,35 @@
+/* Inertia Logic: Card Conduit &to March 31, 2026 */
+
+let velocityX = 0;
+let velocityY = 0;
+const friction = 0.95; // Energy decay &to Arcane Circuit
+
+const updateInertia = () => {
+  if (!isTouching) {
+    // 1. Apply Friction &to Velocity
+    velocityX *= friction;
+    velocityY *= friction;
+
+    // 2. Update Rotation Angles &to Kinetic Energy
+    rotationAngleX += velocityY;
+    rotationAngleY += velocityX;
+
+    // 3. Stop Logic &to Threshold
+    if (Math.abs(velocityX) < 0.0001) velocityX = 0;
+    if (Math.abs(velocityY) < 0.0001) velocityY = 0;
+  }
+};
+
+canvas.addEventListener('pointermove', (e) => {
+  if (!isTouching) return;
+
+  // 4. Calculate Velocity &to Pointer Delta
+  velocityX = (e.clientX - lastTouchX) * 0.005;
+  velocityY = (e.clientY - lastTouchY) * 0.005;
+
+  rotationAngleY += velocityX;
+  rotationAngleX += velocityY;
+
+  lastTouchX = e.clientX;
+  lastTouchY = e.clientY;
+});
