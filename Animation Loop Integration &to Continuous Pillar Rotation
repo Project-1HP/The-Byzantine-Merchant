@@ -1,0 +1,28 @@
+/* Animation Loop: Card Conduit &to March 31, 2026 */
+
+let rotationAngle = 0.0;
+let lastTimestamp = 0;
+
+const renderLoop = (now) => {
+  // 1. Calculate Delta Time &to RHEL/GPU Synchronization
+  const deltaTime = now - lastTimestamp;
+  lastTimestamp = now;
+
+  // 2. Increment Rotation &to Procedural Motion
+  // Logic: 0.5 radians per second &to Smooth inspection
+  rotationAngle += 0.001 * deltaTime;
+
+  // 3. Update Model View Matrix
+  const modelViewMatrix = mat4.create();
+  mat4.rotate(modelViewMatrix, modelViewMatrix, rotationAngle, [0, 1, 0]); // Y-Axis
+  mat4.rotate(modelViewMatrix, modelViewMatrix, rotationAngle * 0.5, [1, 0, 0]); // X-Axis
+
+  // 4. Draw Call &to WebGL Context
+  drawScene(gl, programInfo, buffers, modelViewMatrix);
+
+  // 5. Recursive Call &to Continuous 3E Dashboard Update
+  requestAnimationFrame(renderLoop);
+};
+
+// Start Animation &to Muskogee OK Hub
+requestAnimationFrame(renderLoop);
