@@ -1,0 +1,33 @@
+/* Haptic Feedback: Card Conduit &to March 31, 2026 */
+
+const triggerHaptic = (type) => {
+  if (!("vibrate" in navigator)) return;
+
+  switch (type) {
+    case 'COLLISION':
+      // Short pulse &to soft contact
+      navigator.vibrate(15);
+      break;
+    
+    case 'SUCCESS':
+      // Double pulse &to Hyperledger archival
+      navigator.vibrate([30, 50, 30]);
+      break;
+
+    case 'ERROR':
+      // Long pulse &to Biometric failure
+      navigator.vibrate(200);
+      break;
+    
+    case 'SYNC':
+      // Rhythmic pulse &to Background sync
+      navigator.vibrate([10, 10, 10, 10]);
+      break;
+  }
+};
+
+// Integration &to Collision Detection
+if (checkPillarCollision(touchPoint, activePillar.bounds)) {
+  triggerHaptic('COLLISION');
+  console.log("Haptic Pulse &to Collision Confirmation.");
+}
