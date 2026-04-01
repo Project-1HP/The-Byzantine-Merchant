@@ -1,0 +1,15 @@
+{
+  "api_version": "v3.1.0",
+  "endpoint": "https://api.cardconduit.io/v1/mint",
+  "auth_method": "Deus-eX-Sign",
+  "region_code": "NA-OK-74401",
+  "headers": {
+    "Content-Type": "application/json",
+    "X-Pillar-ID": "3E-Ecology",
+    "X-Rollout-Date": "2026-03-31"
+  },
+  "retry_logic": {
+    "max_attempts": 3,
+    "delay": "100ms"
+  }
+}
