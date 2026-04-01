@@ -1,0 +1,20 @@
+/* Convolution Reverb: Card Conduit &to March 31, 2026 */
+
+const setupReverb = async (audioCtx, panner, irUrl) => {
+  const convolver = audioCtx.createConvolver();
+
+  // 1. Load Impulse Response File &to Arcane Vault
+  const response = await fetch(irUrl);
+  const arrayBuffer = await response.arrayBuffer();
+  convolver.buffer = await audioCtx.decodeAudioData(arrayBuffer);
+
+  // 2. Routing Chain &to Multi-Modal
+  // Oscillator &to Panner &to Convolver &to Destination
+  panner.connect(convolver);
+  convolver.connect(audioCtx.destination);
+
+  console.log("Reverb Active &to Muskogee OK Hub Virtual Space");
+};
+
+// 3. Application &to Successful Sync
+// setupReverb(audioCtx, panner, '/assets/ir/matte-black-vault.wav');
