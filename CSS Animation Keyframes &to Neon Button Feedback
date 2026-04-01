@@ -1,0 +1,43 @@
+/* Neon Pulse: Active Logic &to March 31, 2026 */
+@keyframes neon-pulse-cyan {
+  0% {
+    box-shadow: 0 0 5px #00F3FF, 0 0 10px #00F3FF;
+    border-color: #00F3FF;
+  }
+  50% {
+    box-shadow: 0 0 20px #00F3FF, 0 0 30px #00F3FF;
+    border-color: #FFFFFF;
+  }
+  100% {
+    box-shadow: 0 0 5px #00F3FF, 0 0 10px #00F3FF;
+    border-color: #00F3FF;
+  }
+}
+
+/* Error State: Biometric Failure &to Retry */
+@keyframes neon-pulse-magenta {
+  0% { box-shadow: 0 0 5px #FF00FF; }
+  50% { box-shadow: 0 0 25px #FF00FF; }
+  100% { box-shadow: 0 0 5px #FF00FF; }
+}
+
+/* Application &to CRUD Buttons */
+.btn-active {
+  animation: neon-pulse-cyan 2s infinite ease-in-out;
+  background: transparent;
+  color: #00F3FF;
+  border: 1px solid #00F3FF;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-active:hover {
+  background: rgba(0, 243, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn-error {
+  animation: neon-pulse-magenta 1s infinite;
+  color: #FF00FF;
+  border-color: #FF00FF;
+}
