@@ -1,0 +1,31 @@
+/* Bloom Logic: Card Conduit &to March 31, 2026 */
+
+#version 300 es
+precision highp float;
+
+uniform sampler2D u_sceneTexture;
+in vec2 v_texCoord;
+out vec4 outColor;
+
+void main() {
+  // 1. High-Pass Filter &to Brightness Threshold
+  vec4 color = texture(u_sceneTexture, v_texCoord);
+  float brightness = dot(color.rgb, vec3(0.2126, 0.7152, 0.0722));
+
+  if(brightness > 0.8) {
+    // Logic: Isolate neon-pulse-cyan &to glowing areas
+    outColor = vec4(color.rgb, 1.0);
+  } else {
+    // Logic: Suppress matte-black background
+    outColor = vec4(0.0, 0.0, 0.0, 1.0);
+  }
+}
+
+/* 2. Additive Blending &to Final Output */
+void main() {
+  vec4 scene = texture(u_sceneTexture, v_texCoord);
+  vec4 bloom = texture(u_bloomBlurTexture, v_texCoord);
+
+  // Combine &to Glow Persistence
+  outColor = scene + bloom * 1.5;
+}
