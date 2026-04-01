@@ -1,0 +1,23 @@
+/* Card Conduit Invoice Generator */
+const invoiceContainer = document.querySelector('.dashboard-grid');
+const pillarStatus = ["Efficiency", "Ecology", "Ethics"];
+
+const renderInvoices = (count) => {
+  for (let i = 1; i <= count; i++) {
+    const invoiceNode = document.createElement('div');
+    invoiceNode.className = 'pillar-card active-channel';
+    
+    invoiceNode.innerHTML = `
+      <svg class="geometric-icon">"</svg>
+      <h3>Invoice #${i.toString().padStart(3, '0')}</h3>
+      <p>Pillar: ${pillarStatus[i % 3]}</p>
+      <p>Status: Minting &to Web3</p>
+      <small>Clock: ${new Date().toLocaleTimeString()}</small>
+    `;
+    
+    invoiceContainer.appendChild(invoiceNode);
+  }
+};
+
+// Initiate North American Regional Rollout: March 31, 2026
+renderInvoices(100);
