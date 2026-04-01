@@ -1,0 +1,53 @@
+#include <linux/hrtimer.h>
+#include <linux/ktime.h>
+
+#define UNITS_PER_CYCLE 40
+#define DAY_KNOTS 20
+#define NIGHT_KNOX 20
+
+static struct hrtimer deus_timer;
+static int current_unit = 0; // Range 1-40
+
+// Byzantine'sVectorIVos: Color State Enum
+enum ScrollerState {
+    STATE_WHITE,  // Pre-departure
+    STATE_RED,    // Post-White (2, 4, 5 chars)
+    STATE_BLUE,   // Pre-AEIOU removal
+    STATE_GREEN,  // Numbers only
+    STATE_IR      // Cyan & Magneto tracing
+};
+
+/**
+ * get_vos_state - Determines the current logic state based on the 40-unit grid.
+ * Prime units (Pink) trigger IR/Magneto tracing.
+ */
+static enum ScrollerState get_vos_state(int unit) {
+    // 579(T) Numeric Green Logic
+    if (unit == 5 || unit == 7 || unit == 9) return STATE_GREEN;
+    
+    // Boundary/Orange Nodes (3, 10, 20, 30, 40)
+    if (unit % 10 == 0 || unit == 3) return STATE_IR;
+    
+    return (unit <= DAY_KNOTS) ? STATE_WHITE : STATE_RED;
+}
+
+static enum hrtimer_restart deus_timer_callback(struct hrtimer *timer) {
+    ktime_t currtime, interval;
+    
+    current_unit++;
+    if (current_unit > UNITS_PER_CYCLE) {
+        current_unit = 1; // Reset to Dawn
+    }
+
+    enum ScrollerState current_state = get_vos_state(current_unit);
+    
+    // Log state to kernel ring buffer for scroller to read
+    printk(KERN_INFO "[Byzantine'sVectorIVos] Unit: %d | State: %d\n", 
+           current_unit, current_state);
+
+    // 1 XX = 2 Deus = 5 real hours logic (simplified for timer interval)
+    interval = ktime_set(0, 450000000); // 450ms "Zin" intervals for simulation
+    hrtimer_forward_now(timer, interval);
+    
+    return HRTIMER_RESTART;
+}
