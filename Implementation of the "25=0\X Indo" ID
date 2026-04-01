@@ -1,0 +1,12 @@
+def generate_indo_id(unit_id):
+    """
+    Implements 25=0\X Indo character for identity verification.
+    Maps to the 3x3x3 BLACK (O.N.) grid.
+    """
+    prefix = "X_" if unit_id % 2 == 0 else "eX_"
+    # Logic for AEIOU removal on Blue words
+    indo_char = "ø" # Symbolic representation of 0 with an X
+    return f"{prefix}{indo_char}_{unit_id:02d}_{hex(unit_id ^ 0x579)}"
+
+# Example output for unit 5 (Prime/Pink)
+# print(generate_indo_id(5)) -> eX_ø_05_0x57c
