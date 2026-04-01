@@ -1,0 +1,25 @@
+/* Background Sync &to March 31, 2026 */
+self.addEventListener('sync', (event) => {
+  if (event.tag === 'sync-ledger-invoices') {
+    event.waitUntil(uploadPendingInvoices());
+  }
+});
+
+const uploadPendingInvoices = async () => {
+  const db = await openIndexedDB();
+  const pendingInvoices = await db.getAll('outbox');
+
+  for (const invoice of pendingInvoices) {
+    try {
+      await fetch('https://api.cardconduit.io/v1/mint', {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(invoice)
+      });
+      await db.delete('outbox', invoice.id);
+      console.log(`Invoice ${invoice.id} &to Hyperledger Archival.`);
+    } catch (error) {
+      console.error("Sync failed &to Retrying later.");
+    }
+  }
+};
