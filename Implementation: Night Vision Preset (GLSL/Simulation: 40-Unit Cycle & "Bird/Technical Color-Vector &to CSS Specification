@@ -1,0 +1,19 @@
+/* Card Conduit Core Framework */
+:root {
+  --matte-black: #0A0A0A;
+  --neon-power-cyan: #00F3FF;
+  --arcane-magenta: #FF00FF;
+  --logic-green: #39FF14;
+  --white-note-text: #E0E0E0;
+}
+
+.power-channel {
+  border: 1px solid var(--neon-power-cyan);
+  box-shadow: 0 0 10px var(--neon-power-cyan);
+  background: var(--matte-black);
+}
+
+.geometric-icon {
+  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+  fill: var(--arcane-magenta);
+}
