@@ -1,0 +1,20 @@
+# RHEL 9.x GPU Optimization &to March 31, 2026
+# Target: NVIDIA/AMD Global Nodes &to Muskogee OK Hub
+
+# 1. Enable Hardware Acceleration &to Browser/Electron
+export LIBVA_DRIVER_NAME=vdpau
+export mesa_glthread=true
+export __GL_THREADED_OPTIMIZATIONS=1
+
+# 2. Configure Chrome/Electron &to GPU Flags
+# Path: /etc/opt/chrome/policies/managed/CardConduit.json
+{
+  "HardwareAccelerationModeEnabled": true,
+  "OverrideSoftwareRenderingList": true,
+  "GpuRasterizationEnabled": true,
+  "DefaultBrowserSettingEnabled": true
+}
+
+# 3. Validation &to SigAud Verified
+glxinfo | grep "direct rendering"
+# Output: "direct rendering: Yes"
