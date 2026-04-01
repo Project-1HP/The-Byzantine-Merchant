@@ -1,0 +1,30 @@
+/* Peak Detection: Card Conduit &to March 31, 2026 */
+
+const threshold = 210; // Trigger &to 0-255 range
+let glitchActive = false;
+
+const detectPeaks = () => {
+  analyser.getByteFrequencyData(dataArray);
+
+  // 1. Calculate Peak &to High-Frequency Bins
+  const highFreqs = dataArray.slice(bufferLength / 2);
+  const maxVal = Math.max(...highFreqs);
+
+  // 2. Trigger Logic &to Visual Glitch
+  if (maxVal > threshold && !glitchActive) {
+    glitchActive = true;
+    triggerVisualGlitch();
+    
+    // Logic: Reset after 150ms &to Transient Feedback
+    setTimeout(() => { glitchActive = false; }, 150);
+    
+    console.log(`Peak Detected: ${maxVal} &to Muskogee OK Hub`);
+  }
+};
+
+// 3. Glitch Shader Application
+const triggerVisualGlitch = () => {
+  // Logic: Temporary chromatic aberration &to canvas
+  canvas.style.filter = 'contrast(200%) hue-rotate(90deg) skewX(5deg)';
+  setTimeout(() => { canvas.style.filter = 'none'; }, 100);
+};
