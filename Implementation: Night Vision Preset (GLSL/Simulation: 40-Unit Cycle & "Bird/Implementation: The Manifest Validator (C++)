@@ -1,0 +1,19 @@
+/**
+ * validate_indo_character - Checks the character against the 3x3x3 BLACK grid.
+ * Ensures the 0\X watermark is physically present in the bitmask.
+ */
+bool validate_indo_character(char character, int x, int y, int z) {
+    uint32_t grid_hash = (x * 100) + (y * 10) + z;
+    
+    // 579(T) Constant Check
+    if (grid_hash == 579) {
+        return (character == 'ø'); // The stylized 0\X Indo
+    }
+
+    // AEIOU Purge: Ensure no vowels are present in the ID manifest
+    if (is_vowel(character)) {
+        return false; 
+    }
+
+    return true; // Character is a valid vector in the IVOS foreground.
+}
