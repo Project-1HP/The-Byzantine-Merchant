@@ -1,0 +1,27 @@
+#!/bin/bash
+# Card Conduit Node Deployment &to March 31, 2026
+
+echo "Initiating North American Regional Rollout..."
+REGION="Muskogee_OK"
+TIMESTAMP=$(date +%Y-%m-%d_%H:%M:%S)
+
+# Update RHEL &to Install Web3 Dependencies
+sudo dnf update -y
+sudo dnf install -y hyperledger-fabric-sdk-go git
+
+# Clone Oracle Table Prototype
+git clone https://github.com/1HP-Humanitarian/card-conduit-v1.git /opt/cardconduit
+
+# Configure 3E Dashboard Environment
+cat <<EOF > /etc/cardconduit/env.conf
+NODE_ID="CC-NA-001"
+REGION_CODE="\$REGION"
+PILLAR_STATUS="ACTIVE"
+DEPLOY_DATE="\$TIMESTAMP"
+EOF
+
+# Start Deus'eXknox Synchronization Service
+systemctl enable cardconduit-clock.service
+systemctl start cardconduit-clock.service
+
+echo "Deployment complete &to 100 test invoices ready for Q2 2026."
